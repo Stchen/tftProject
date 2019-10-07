@@ -6,7 +6,9 @@ import java.util.*;
 
 public class Main {
 
-    private static HashMap<String, Champion> champLibrary = new ChampsList().getChampSet();
+    private static final ChampsList data = new ChampsList();
+    private static final HashMap<String, HashSet<String>> champTypeLibrary = data.getChampTypeLibrary();
+    private static final HashMap<String, Champion> champLibrary = data.getChampSet();
     private static ArrayList<Champion> currentChamps = new ArrayList<Champion>();
     private static HashMap<String, Integer> currentSynergies = new HashMap<String, Integer>();
 
@@ -25,7 +27,9 @@ public class Main {
                     champName = client.next();
                 }
                 command(command, champName);
+                printInventory();
             }
+
         }
     }
 
@@ -42,8 +46,13 @@ public class Main {
         }
         return result;
     }
-
+    //Get Champion that matches synergy the most.
     public static String getChampionMatch(){
+        //get current synergies
+        for(String synergy: currentSynergies){
+
+        }
+        //look through champLibrary using synergies as key and note what/how many time a champion name pops up.
         return "";
     }
 
@@ -65,6 +74,27 @@ public class Main {
             }else{
                 currentSynergies.put(type, synergyNum--);
             }
+        }
+    }
+    //prints what we currently have for champions and synergies.
+    public static void printInventory(){
+        boolean allowComma = false;
+        System.out.println("These are the current Champions you have:");
+        for(String champName : currentChamps){
+            if(allowComma){
+                System.out.print(", ")
+            }
+            System.out.print(champName);
+            allowComma = true;
+        }
+        allowComma = false;
+        System.out.println("These are the current synergies you have:");
+        for(String synergy : currentSynergies.keySet()){
+            if(allowComma){
+                System.out.print(", ")
+            }
+            System.out.print(synergy);
+            allowComma = true;
         }
     }
 }

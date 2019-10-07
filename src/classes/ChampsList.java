@@ -4,6 +4,7 @@ import java.util.*;
 public class ChampsList {
 
     private HashMap<String, Champion> champList;
+    private HashMap<String, HashSet<String>> champTypeLibrary= new HashMap<String>();
 
     //constructor;
     public ChampsList(){
@@ -58,10 +59,27 @@ public class ChampsList {
         champList.put("Lulu", new Champion("Lulu", new String[]{"Sorcerers", "Yordle"}));
         champList.put("Morgana", new Champion("Morgana", new String[]{"Sorcerers", "Demon"}));
         champList.put("Veigar", new Champion("Veigar", new String[]{"Sorcerers", "Yordle"}));
+        createChampTypeLibrary();
     }
 
     public HashMap<String, Champion> getChampSet(){
         return champList;
+    }
+    public HashMap<String, HashSet<String>> getChampTypeLibrary() { return champTypeLibrary; }
+
+    public void createChampTypeLibrary(){
+        for(String champName : champList.keySet()){
+            for(String champType : champList.get(champName)){
+                if(champTypeLibrary.contains(champType)){
+                    HashSet<String> updatedSet = champTypeLibrary.get(champType).add(champName);
+                    champTypeLibrary.put(champType, updatedSet);
+                }else{
+                    HashSet<String> newSet = new HashSet<String>();
+                    newSet.add(champName);
+                    champTypeLibrary.put(champType, newSet);
+                }
+            }
+        }
     }
 
 }
